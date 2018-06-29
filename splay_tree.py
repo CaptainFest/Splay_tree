@@ -2,7 +2,6 @@ import random as r
 import os
 import timeit
 import splay_node
-import matplotlib.pyplot as plt
 
 
 class SplayTree(object):
@@ -237,7 +236,7 @@ def show_tree(t, node=None):
     return
 
 
-def call_random_op(kol, m):
+def call_random_op(m, kol):
     ch = [0, 1, 2]       # 0 - find, 1 - add, 2 - del
     data = read_test_file()                # massive of int, which is in the tree
     data_2 = generate_data(m*2, kol*2)
@@ -313,37 +312,15 @@ def save_tree(t, filename, sec):
         os.system('%s.txt -T' % filename)
 
 
-def graphic(x_data, y_data):
-
-    _, ax = plt.subplots()
-
-    ax.plot(x_data, y_data)
-    plt.axis([0.0, 2500.0, 0.0, 0.06])
-    ax.set_title("T(n)")
-    ax.set_xlabel("n")
-    ax.set_ylabel("T")
-    plt.grid(True, linestyle='-', color='0.75')
-    plt.show()
-
-
 if '__main__' == __name__:
 
     t = SplayTree()
     max_size = 1500
-    size = kol = 350
-    sec_list = []
-    kol_list = []
-    create_test_file(max_size, kol)     # 1 argument - max possible data, 2 argument - data count
-    build_tree(t)                       # building splay tree using data from text file
-    data = read_test_file()
-    for i in range(0, kol+1, 10):
-        sec = call_random_op(i, max_size)      # makes n random operations from list [find, add, del]
-        sec_list.append(sec)
-        kol_list.append(i)
-    print(sec_list)
-    print(kol_list)
-    graphic(kol_list, sec_list)
-    save_tree(t, 'result', sec)         # save in result.txt
-    # show_tree(t)                      # uncomment to view in console
+    size = kol = 200
+    create_test_file(max_size, size)          # 1 argument - max possible data, 2 argument - data count
+    build_tree(t)                            # building splay tree using data from test file
+    sec = call_random_op(max_size, kol)      # makes n random operations from list [find, add, del]
+    save_tree(t, 'result', sec)              # save in result.txt
+    # show_tree(t)                           # uncomment to view in console
 
 
